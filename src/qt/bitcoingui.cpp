@@ -47,7 +47,6 @@
 #include <QMimeData>
 #include <QStyle>
 #include <QSettings>
-#include <QStyleFactory>
 #include <QDesktopWidget>
 #include <QListWidget>
 
@@ -72,28 +71,8 @@ BitcoinGUI::BitcoinGUI(QWidget *parent) :
     nAverageWeight(0),
     nTotalWeight(0)
 {
-    setStyleSheet("font-weight:300; font-size:12px; font-family:'Roboto'");
-    QString ss("QMenuBar::item { background-color: transparent; color: #000000 }");
-    menuBar()->setStyleSheet(ss);
-	restoreWindowGeometry();
+    restoreWindowGeometry();
     setWindowTitle(tr("ILoveYouCoins") + " - " + tr("Wallet"));
-	qApp->setStyle(QStyleFactory::create("Fusion"));
-QPalette palette;
-palette.setColor(QPalette::Window, QColor(247,247,247));
-palette.setColor(QPalette::WindowText, Qt::black);
-palette.setColor(QPalette::Base, QColor(247,247,247));
-palette.setColor(QPalette::AlternateBase, QColor(207,220,226));
-palette.setColor(QPalette::ToolTipBase, Qt::black);
-palette.setColor(QPalette::ToolTipText, Qt::black);
-palette.setColor(QPalette::Text, Qt::black);
-palette.setColor(QPalette::Button, QColor(247,247,247));
-palette.setColor(QPalette::ButtonText, Qt::black);
-palette.setColor(QPalette::BrightText, Qt::red);
- 
-palette.setColor(QPalette::Highlight, QColor(237,191,157).lighter());
-palette.setColor(QPalette::HighlightedText, Qt::black);
-qApp->setPalette(palette); 
-
 #ifndef Q_OS_MAC
     QApplication::setWindowIcon(QIcon(":icons/bitcoin"));
     setWindowIcon(QIcon(":icons/bitcoin"));
@@ -117,14 +96,12 @@ qApp->setPalette(palette);
 
     // Create the toolbars
     createToolBars();
-	
 
     // Create system tray icon and notification
     createTrayIcon();
 
     // Create status bar
     statusBar();
-	statusBar()->setStyleSheet("border: none; background-color: #f7f7f7; color: #000000;");
 
     // Status bar notification icons
     QFrame *frameBlocks = new QFrame();
@@ -132,7 +109,6 @@ qApp->setPalette(palette);
 //  frameBlocks->setMinimumWidth(56);
 //  frameBlocks->setMaximumWidth(56);
     frameBlocks->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-	frameBlocks->setStyleSheet("color: #000000;");
     QHBoxLayout *frameBlocksLayout = new QHBoxLayout(frameBlocks);
     frameBlocksLayout->setContentsMargins(3,0,3,0);
     frameBlocksLayout->setSpacing(3);
@@ -213,8 +189,8 @@ void BitcoinGUI::createActions()
     overviewAction->setCheckable(true);
     overviewAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_1));
     tabGroup->addAction(overviewAction);
-	
-	sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send"), this);
+
+    sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send"), this);
     sendCoinsAction->setStatusTip(tr("Send coins to a ILoveYouCoins address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
     sendCoinsAction->setCheckable(true);
@@ -228,14 +204,14 @@ void BitcoinGUI::createActions()
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
-    historyAction = new QAction(QIcon(":/icons/history"), tr("&History"), this);
+    historyAction = new QAction(QIcon(":/icons/history"), tr("&Transactions"), this);
     historyAction->setStatusTip(tr("Browse transaction history"));
     historyAction->setToolTip(historyAction->statusTip());
     historyAction->setCheckable(true);
     historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
     tabGroup->addAction(historyAction);
 
-    addressBookAction = new QAction(QIcon(":/icons/address-book"), tr("&Adress Book"), this);
+    addressBookAction = new QAction(QIcon(":/icons/address-book"), tr("&Addresses"), this);
     addressBookAction->setStatusTip(tr("Edit the list of stored addresses and labels"));
     addressBookAction->setToolTip(addressBookAction->statusTip());
     addressBookAction->setCheckable(true);
@@ -250,8 +226,8 @@ void BitcoinGUI::createActions()
 
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
-	connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
-    connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
+	connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(sendCoinsAction, SIGNAL(triggered()), this, SLOT(gotoSendCoinsPage()));
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(gotoReceiveCoinsPage()));
@@ -344,26 +320,14 @@ void BitcoinGUI::createMenuBar()
 
 void BitcoinGUI::createToolBars()
 {
-    QLabel *mylabel = new QLabel (this);
-    mylabel->setPixmap(QPixmap(":images/head"));
-    mylabel->show();
-	
-	QToolBar* toolbar = new QToolBar(this);
-	toolbar->setObjectName("toolbar");
-	addToolBar(Qt::LeftToolBarArea, toolbar);
-    toolbar->setIconSize(QSize(60,36));
-	toolbar->setOrientation(Qt::Vertical);
-	toolbar->setMovable( false );
-    toolbar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-	toolbar->addWidget(mylabel);
+    QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
+    toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     toolbar->addAction(overviewAction);
 	toolbar->addAction(blockAction);
     toolbar->addAction(sendCoinsAction);
     toolbar->addAction(receiveCoinsAction);
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
-	
-	toolbar->setStyleSheet("#toolbar { font-weight:300;border:none;height:100%;padding-top:20px; background: #f7f7f7; text-align: left; color: black;} QToolBar QToolButton:hover {background:rgb(237,191,157);} QToolBar QToolButton:checked {background:rgba(247,247,247);}  QToolBar QToolButton { font-weight:300;font-size:12px;font-family:'Roboto';padding-left:1px;padding-right:60px;padding-top:5px;padding-bottom:5px; height: 48px; width: 48px; color: black; text-align: left; background:transparent;text-transform:uppercase; }");
 }
 
 void BitcoinGUI::setClientModel(ClientModel *clientModel)
@@ -407,7 +371,7 @@ void BitcoinGUI::setClientModel(ClientModel *clientModel)
         connect(clientModel, SIGNAL(message(QString,QString,unsigned int)), this, SLOT(message(QString,QString,unsigned int)));
 
         rpcConsole->setClientModel(clientModel);
-		walletFrame->setClientModel(clientModel);
+        walletFrame->setClientModel(clientModel);
     }
 }
 
