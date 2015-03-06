@@ -1,0 +1,18 @@
+Coin Sufix: ILY 
+Algorítimo: Scrypt PoW
+PoW Period: 6,65 Years
+Coins per Block:  ILY 
+Total of Coins will mined: 7 Billion~
+PoW Ends: Block 3,495,250~
+Premine: 51% for bounty, prize and crowfunding
+Transaction fee: 0.1% per transaction
+Confirmations: 6, Maturity: 60
+Confirmations for transactions: 6 Blocks = 6 Minutes
+Target Spacing: 1 Minute
+Difficulty Retarget: Every block
+Max Number of Coin: 14 Billion~ ILY
+Block Halving: Never
+P2P Port: 9920 
+RPC Port: 9919
+
+

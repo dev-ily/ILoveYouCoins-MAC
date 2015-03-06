@@ -1,0 +1,9 @@
+Building ILoveYouCoins
+
+See doc/readme-qt.rst for instructions on building ILoveYouCoins-Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of ILoveYouCoins.
+
+See doc/build-*.txt for instructions on building iloveyoucoinsd,
+the intended-for-services, no-graphical-interface, reference
+implementation of ILoveYouCoins.

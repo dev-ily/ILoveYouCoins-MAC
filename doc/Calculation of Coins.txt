@@ -1,0 +1,4 @@
+2000 coins * 60 minutes (2000 coins per minute * 1 hour) = 120,000 coins per hour * 24 hours = 2,880,000 coins per day
+* 365 days = 1,051,200,000 coins per year!
+
+7 billion / 1,051,200,000 = 6,65~ Years
